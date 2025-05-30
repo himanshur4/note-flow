@@ -1,28 +1,24 @@
-import { LucideBrush, Paintbrush, Paintbrush2, PaintBucket, PaintRoller, PaletteIcon, PlusIcon } from 'lucide-react'
-import React from 'react'
+import { PlusIcon } from 'lucide-react'
 import { Link } from 'react-router'
 
 const Navbar = () => {
-  return (
-   <header className='bg-base-300 border-b border-base-content/10'>
-    <div className='mx-auto max-w-6xl p-4'>
-        <div className='flex items-center justify-between'>
-            <h1 className='text-3xl font-bold text-primary font-mono tracking-tighter sm:tracking-tight '>NoteFlow
-            </h1>
-            <div className='flex items-center gap-2'>
-                <button className='btn btn-ghost btn-square'>
-                <PaletteIcon className='size-7'/>
-                </button>
-                <Link to={'/create'} className='btn btn-primary'>
-                    <PlusIcon className='size-5'/>
-                    <span>New Note</span>
-                </Link>
+    return (
+        <header className='bg-base-300 border-b border-base-content/10'>
+            <div className='mx-auto max-w-7xl p-4'>
+                <div className='flex items-center justify-between'>
+                    <h1 className='text-3xl font-bold text-primary font-mono tracking-tighter sm:tracking-tight '>NoteFlow
+                    </h1>
+                    <div className="flex items-center gap-4">
+                        <Link to={'/create'} className='btn btn-primary'>
+                            <PlusIcon className='size-5' />
+                            <span>New Note</span>
+                        </Link>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-   </header>
-  )
+        </header>
+    )
 }
 
 export default Navbar
