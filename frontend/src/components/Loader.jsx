@@ -3,8 +3,8 @@ import React from 'react'
 
 const Loader = () => {
   return (
-     <div className='flex-col flex items-center justify-center gap-4'>
-      <LucideLoader className='animate-spin size-10 text-primary mt-40'/>
+     <div className='min-h-screen bg-base-900 flex items-center justify-center'>
+      <LucideLoader className='animate-spin size-10'/>
     </div>
   )
 }
