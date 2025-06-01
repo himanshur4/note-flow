@@ -11,18 +11,24 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 const __dirname = path.resolve();
 
-if (process.env.NODE_ENV !== "production") {
-    app.use(cors(
-        {
-            origin: "http://localhost:5173"
-        }
-    ));
-}
+app.use(cors({
+    origin: [
+        'http://localhost:5173',
+        'https://notes-making.vercel.app',    // Add your Vercel domain here
+        /\.vercel\.app$/                      // Allow all Vercel preview deployments
+    ],
+    credentials: true
+}));
 
 app.use(express.json());
 app.use(rateLimiter);
 
 app.use("/api/notes", notesRouter);
+
+// Health check endpoint for Render
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+});
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../frontend/dist")));
@@ -31,7 +37,6 @@ if (process.env.NODE_ENV === "production") {
 
     });
 }
-
 
 connectDB().then(() => {
     app.listen(PORT, () => {
