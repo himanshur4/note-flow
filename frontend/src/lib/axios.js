@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = import.meta.env.PROD 
-    ? "https://notes-making-backend.onrender.com/api"  // Replace with your Render URL
+    ? "https://noteflow-backend-anvi.onrender.com/api"  // Replace with your Render URL
     : "http://localhost:5001/api";
 
 const api = axios.create({
