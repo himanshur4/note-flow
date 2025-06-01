@@ -1,7 +1,6 @@
 import express from "express"
 import "dotenv/config";
 import cors from "cors";
-import path from "path";
 
 import connectDB from "./src/config/db.js";
 import rateLimiter from "./src/middleware/rateLimiter.js";
@@ -9,7 +8,7 @@ import notesRouter from "./src/routes/notesRouter.js";
 
 const app = express();
 const PORT = process.env.PORT || 5001;
-const __dirname = path.resolve();
+
 
 app.use(cors({
     origin: [
@@ -30,13 +29,7 @@ app.get('/health', (req, res) => {
     res.status(200).json({ status: 'ok' });
 });
 
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../frontend/dist")));
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
 
-    });
-}
 
 connectDB().then(() => {
     app.listen(PORT, () => {
