@@ -31,7 +31,7 @@ cd note-flow
 
 ### 2. Start the backend
 ```bash
-cd server
+cd backend
 npm install
 # Add your environment variables in .env
 npm run dev
@@ -39,7 +39,7 @@ npm run dev
 
 ### 3. Start the frontend
 ```bash
-cd ../client
+cd ../frontend
 npm install
 npm run dev
 ```
@@ -48,20 +48,11 @@ npm run dev
 
 ## 🔐 Environment Variables
 
-Create a `.env` file inside the `server/` directory:
+Create a `.env` file inside the `backend/` directory:
 
 ```env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
-```
-
----
-
-## 📁 Folder Structure
-
-```
-/client         # React frontend
-/server         # Express backend
 ```
 
 ---
