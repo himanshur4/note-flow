@@ -1,4 +1,4 @@
-# Note-Flow 📝🌊
+# Note-Flow 📝
 
 **Note-Flow** is a full-stack, minimalistic note-taking application that allows users to write, manage, and organize notes in a clean UI. It's fast, intuitive, and built for productivity.
 
@@ -53,7 +53,6 @@ Create a `.env` file inside the `server/` directory:
 ```env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
 ```
 
 ---
