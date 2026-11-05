@@ -11,8 +11,9 @@ const rateLimiter=async (req,res,next)=>{
         }
         next();
      } catch (error) {
-        console.log("Rate Limit error",error);
-        next(error);
+        // A rate limiter outage shouldn't take the notes down with it.
+        console.error("Rate limit check failed, allowing the request:",error.message);
+        next();
      }
 };
 

@@ -1,8 +1,15 @@
 import Note from "../models/Note.js";
 
+// Enough to fill the 3-line preview on a note card at any screen width.
+const PREVIEW_LENGTH=300;
+
 export const getAllNotes=async(_,res)=>{
     try {
-        const notes=await Note.find().sort({createdAt:-1});
+        // The list only shows previews. The full content is loaded when a note is opened.
+        const notes=await Note.aggregate([
+            {$sort:{createdAt:-1}},
+            {$project:{title:1,createdAt:1,content:{$substrCP:["$content",0,PREVIEW_LENGTH]}}},
+        ]);
         res.status(200).json(notes);
     } catch (error) {
         console.error("Error in getAllNotes controller ",error.message);

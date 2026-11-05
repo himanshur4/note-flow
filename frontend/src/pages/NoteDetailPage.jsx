@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router";
 import api from "../lib/axios";
+import { updateCachedNotes } from "../lib/notesCache.js";
 import toast from "react-hot-toast";
 import Loader from "../components/Loader";
 import { ArrowLeftIcon, Trash2Icon } from "lucide-react";
@@ -32,6 +33,7 @@ const NoteDetailPage = () => {
     if(!window.confirm("Are you sure to delete this note?")) return;
     try {
       await api.delete(`/notes/${id}`);
+      updateCachedNotes((notes) => notes.filter((cached) => cached._id !== id));
       toast.success("Note deleted successfully🎉");
       navigate("/");
     } catch (error) {
@@ -46,7 +48,8 @@ const NoteDetailPage = () => {
     }
     setSaving(true);
     try {
-      await api.put(`/notes/${id}`,note);
+      const res = await api.put(`/notes/${id}`,note);
+      updateCachedNotes((notes) => notes.map((cached) => (cached._id === id ? res.data.updatedNote : cached)));
       toast.success("Note updated successfuly🎉");
       navigate('/');
     } catch (error) {
@@ -60,6 +63,17 @@ const NoteDetailPage = () => {
 
   if (loading) {
     return <Loader />
+  }
+  if (!note) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center space-y-4 text-center">
+        <h3 className="text-2xl font-bold">Couldn't load this note</h3>
+        <Link to={'/'} className="btn btn-ghost">
+          <ArrowLeftIcon className="size-5" />
+          Back to Notes
+        </Link>
+      </div>
+    )
   }
   return (
     <div className="min-h-screen bg-base-800">

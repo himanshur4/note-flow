@@ -6,7 +6,9 @@ const BASE_URL = import.meta.env.PROD
 
 const api = axios.create({
     baseURL: BASE_URL,
-    withCredentials: true
+    withCredentials: true,
+    // Long enough for a sleeping Render server to wake up, without waiting forever.
+    timeout: 90000
 });
 
 export default api;

@@ -16,23 +16,26 @@ app.use(cors({
         'https://noteflow-gamma.vercel.app/',    
         /\.vercel\.app$/                    
     ],
-    credentials: true
+    credentials: true,
+    // Lets browsers reuse the preflight check instead of repeating it before every write.
+    maxAge: 86400
 }));
+
+// Above the rate limiter so uptime checks are instant and don't use up the limit.
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+});
 
 app.use(express.json());
 app.use(rateLimiter);
 
 app.use("/api/notes", notesRouter);
 
-app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'ok' });
+// Listen before the database is ready: queries wait briefly for the connection, and if the
+// database is down, requests get an error instead of hanging with no server to answer them.
+app.listen(PORT, () => {
+    console.log(`Server running on PORT:${PORT}`);
 });
 
-
-
-connectDB().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server running on PORT:${PORT}`);
-    });
-});
+connectDB();
 

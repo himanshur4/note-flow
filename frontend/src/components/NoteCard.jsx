@@ -14,7 +14,8 @@ const NoteCard = ({note,setNotes}) => {
       setNotes((prev)=>prev.filter(note=>note._id!==id))
       toast.success("Note deleted successfully🎉")
     } catch (error) {
-      
+      console.log("Error deleting the note:",error);
+      toast.error("Failed to delete note");
     }
   }
   return (
